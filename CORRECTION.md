@@ -25,7 +25,7 @@
 
 Ce bloc de code en backend nous permet de gérer les authentifications. anyRequest().authenticated() nous dit qu'il faut être authentifié pour être authorisé à accéder au site.
 
-``
+``````
     @GetMapping("/user")
     @PreAuthorize("hasAuthority('SCOPE_ROLE_USER')")
     public String userAccess() {
@@ -37,7 +37,7 @@ Ce bloc de code en backend nous permet de gérer les authentifications. anyReque
     public String adminAccess() {
         return "Admin access";
     }
-``
+``````
 
 ce code nous permet de comprendre qui accède à quoi.
 

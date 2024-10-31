@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.example.secutraining.dto.LoginResponse;
 import com.example.secutraining.entities.User;
 import com.example.secutraining.repositories.RoleRepository;
 import com.example.secutraining.repositories.UserRepository;
@@ -32,15 +33,17 @@ public class AuthController {
     }
 
     @PostMapping("/login")
-    public String login(@RequestBody User user) {
-
-        // j'ai besoin de l'objet d'authentification de Spring pour cet utilisateur
+    public LoginResponse login(@RequestBody User user) {
         Authentication auth = this.authManager.authenticate(new UsernamePasswordAuthenticationToken(
-                user.getUsername(), user.getPassword()));
+                user.getUsername(), user.getPassword()
+        ));
         String token = tokenService.generateToken(auth);
+        // récupère l'utilisateur connecté
+        User userConnected = (User) auth.getPrincipal();
 
-        return token;
+        return new LoginResponse(token, userConnected);
     }
+
 
 
     @PostMapping("/register")

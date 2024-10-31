@@ -22,16 +22,16 @@ public class DemoController {
         this.demoRepository = demoRepository;
     }
 
-    @GetMapping("")
-    @PreAuthorize("hasAnyAuthority('SCOPE_ROLE_USER', 'SCOPE_ROLE_ADMIN')") // Accessible par ROLE_USER et ROLE_ADMIN
-    public List<DemoEntity> getAll() {
-        return this.demoRepository.findAll();
+    @GetMapping("/user")
+    @PreAuthorize("hasAuthority('SCOPE_ROLE_USER')")
+    public String userAccess() {
+        return "User access";
     }
 
-    @PostMapping("")
-    @PreAuthorize("hasAuthority('SCOPE_ROLE_ADMIN')") // Accessible par ROLE_ADMIN uniquement
-    public DemoEntity createDemo(@RequestBody DemoEntity entity) {
-        return this.demoRepository.save(entity);
+    @GetMapping("/admin")
+    @PreAuthorize("hasAuthority('SCOPE_ROLE_ADMIN')")
+    public String adminAccess() {
+        return "Admin access";
     }
 
 }
